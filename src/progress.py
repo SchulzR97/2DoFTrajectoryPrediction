@@ -20,8 +20,16 @@ class Bar():
         bar_str += "| {0:.2f}%".format(percentage * 100)
         print(bar_str, end="")
 
-        if percentage >= 1:
-            print()
+        #if percentage >= 1:
+        #    print()
+
+    def delete(self):
+        print("\r", end="")
+        blankStr = ""
+        for i in range(self.size+10):
+            blankStr += " "
+        print(blankStr, end="")
+        print("\r", end="")
 
 if __name__ == "__main__":
     bar = Bar()

@@ -17,7 +17,7 @@ def generate_line(x1, y1, x2, y2, step):
     angle = np.arctan2(y2 - y1, x2 - x1)
     if angle > 1:
         pass
-    step_x = step if y2==y1 else np.abs(angle) * step
+    step_x = step if y2==y1 else np.cos(np.abs(angle)) * step
     x = np.arange(x_start, x_end, step_x)
     if x1 > x2:
         x = x[::-1]

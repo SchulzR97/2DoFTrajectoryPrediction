@@ -23,28 +23,26 @@ class Transform_2DoF:
 
         return j1, j2
 
-    def to_cartesian(self):
-        pass
+    def to_cartesian(self, j1, j2):
+        x = np.cos(j1) * self.limb1 + np.cos(j1 + j2 - np.pi) * self.limb2
+        y = np.sin(j1) * self.limb1 + np.sin(j1 + j2 - np.pi) * self.limb2
+        return x, y
 
 if __name__ == '__main__':
     ik = Transform_2DoF(10, 10, 0, 0)
 
-    j1 = 45 
+    j1 = 0
     j2 = 180
-    phi1 = 180-90-j1
-    phi2 = j2-90-phi1
 
     j1 = j1 / 180 * np.pi
     j2 = j2 / 180 * np.pi
-    phi1 = phi1 / 180 * np.pi
-    phi2 = phi2 / 180 * np.pi
 
-    y1 = np.sin(j1) * ik.limb1
-    y2 = np.sin(phi2) * ik.limb2
-
-    posX = np.cos(j1) * ik.limb1 + np.cos(phi2) * ik.limb2
-    posY = np.sin(j1) * ik.limb1 + np.sin(phi2) * ik.limb2
+    posX, posY = ik.to_cartesian(j1, j2)
     j1_calc, j2_calc = ik.to_euler(posX, posY)
+
+    test_x, test_y = ik.to_cartesian(j1, j2)
+    test_x = test_x
+    test_y = test_y
 
     print('j1', j1)
     print('j2', j2)

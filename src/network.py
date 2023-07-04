@@ -141,7 +141,7 @@ class RecurrentNetwork(object):
             # Learning rule W <- W - e * (P*R)/(1+R'*P*R)
             self.W_rec[i, self.W_plastic[i]] -= error[i, 0] * (PxR/RxPxR)[:, 0]
 
-    def train_readout(self, target):
+    def train_readout(self, target, learning_rate = 1.0):
         """
         Applies the RLS learning rule to the readout weights.
         
@@ -163,7 +163,7 @@ class RecurrentNetwork(object):
             self.P_out[i] -= np.dot(PxR, PxR.T)/RxPxR
             
             # Learning rule W <- W - e * (P*R)/(1+R'*P*R)
-            self.W_out[i, :] -= error[i, 0] * (PxR/RxPxR)[:, 0]
+            self.W_out[i, :] -= learning_rate * error[i, 0] * (PxR/RxPxR)[:, 0]
 
         return error
     
@@ -208,7 +208,7 @@ class RecurrentNetwork(object):
 def load(filename):
     with open(filename, 'rb') as f:
         net : RecurrentNetwork = pickle.load(f)
-        print('Net {0}  loaded.'.format(filename))
+    print('Net {0}  loaded.'.format(filename))
     return net
 
     f = open(filename, mode='r')
